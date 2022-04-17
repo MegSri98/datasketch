@@ -30,6 +30,7 @@ table2$`Density[a]`<- gsub("\\s*\\([^\\)]+\\)","",as.character(table2$`Density[a
 table2$`Density[a]`<- gsub(",","",table2$`Density[a]`)
 table2$`Density[a]` <- as.numeric(iconv(table2$`Density[a]`, 'utf-8', 'ascii', sub=''))
 
+#simple bar plot
 nm <- table2$`State or union territory`
 barplot(table2$`Density[a]`,
         names=nm,
@@ -46,9 +47,20 @@ table3 <-as.data.frame(table2)
 ab<-as.data.frame(table2$`Density[a]`)
 nm <- table2$`State or union territory`
 
+# static ggplot bar
 ggplot(table3, aes(x=`State or union territory`,y=`Density[a]`)) +
   geom_bar(stat="identity")+ 
   scale_x_discrete(guide = guide_axis(angle = 90)) 
 
+# interactive bar plot
+install.packages('highcharter')
+Population_Density <-(table2$`Density[a]`)
+Provinces <- table2$`State or union territory`
+library(highcharter) 
+options(highcharter.theme = hc_theme_bloom(tooltip = list(valueDecimals = 2)))
+table3 <-as.data.frame(table2)
+hc <- table3 %>%
+hchart('bar', hcaes(x = Provinces, y = Population_Density ))
+hc
 
 
