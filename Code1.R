@@ -40,3 +40,15 @@ barplot(table2$`Density[a]`,
         main = "Plot"
 )
 
+install.packages('ggplot2')
+library(ggplot2)
+table3 <-as.data.frame(table2)
+ab<-as.data.frame(table2$`Density[a]`)
+nm <- table2$`State or union territory`
+
+ggplot(table3, aes(x=`State or union territory`,y=`Density[a]`)) +
+  geom_bar(stat="identity")+ 
+  scale_x_discrete(guide = guide_axis(angle = 90)) 
+
+
+
